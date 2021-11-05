@@ -1,0 +1,26 @@
+extends layout
+
+
+
+block content
+
+
+
+  h1= title
+
+  p Welcome to the WebApps Assignment-10
+
+  button(type="button", class="btn btn-secondary" onclick='update()')= 'Press Me'
+
+  div(id='target' class='container row col-md-4 mt-1 display-4') #{client_count} 0
+
+
+
+  script.  
+      var client_count= 0;    
+      function update(){
+        client_count++;
+        document.getElementById('target').innerHTML="Value now " + client_count;
+      }
+
+  a(href='luggage') luggage
