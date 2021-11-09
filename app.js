@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var Costume=require('./models/costume')
 
 
 const connectionString=process.env.MONGO_CON;
@@ -17,8 +18,25 @@ mongoose.connect(connectionString,
 db.on('error', console.error.bind(console, `MongoDB connection
 error:`));
 db.once("open", function(){
+
+
 console.log("Connection to DB succeeded")});
 
+
+async function recreateDB(){
+  // Delete everything
+  await Costume.deleteMany();
+  
+ Costume.insertMany( [{costume_type:"ghost", size:'large',
+ cost:25.4},{costume_type:"traditional", size:'medium',
+ cost:45.4},{costume_type:"western", size:'small',
+ cost:15.4}],function(err,doc) {
+  if(err) return console.error(err);
+  console.log("First object saved")
+  });
+ }
+ let reseed = true;
+ if (reseed) { recreateDB();}
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
