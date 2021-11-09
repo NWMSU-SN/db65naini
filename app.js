@@ -1,8 +1,24 @@
 var createError = require('http-errors');
+var mongoose=require('mongoose');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+
+const connectionString=process.env.MONGO_CON;
+mongoose.connect(connectionString,
+  {useNewUrlParser: true,
+  useUnifiedTopology: true});
+
+  var db= mongoose.connection;
+
+//Bind connection to error event
+db.on('error', console.error.bind(console, `MongoDB connection
+error:`));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
