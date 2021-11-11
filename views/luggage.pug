@@ -2,14 +2,19 @@ extends layout
 
 block content
   h1= title
-  - const luggage = ['luggage_type','weight','cost']
-  - let results;
-  script.
-    function buy(x){
-      alert('Purchased Item: ' + x)
-   } 
-  div(class='container-fluid')
-    div(class='row')
-      each results, index in luggage
-        div(class='col-sm-2' onclick='buy('+index+')') #{results} 
-        
+  - let image_names = results
+    table(class="table table-dark table-striped")
+        thead
+            tr 
+                th(scope="col") Lagguage Type 
+                th(scope="col") Size 
+                th(scope="col") Pirce
+        tbody        
+            - for(let i=0;i<image_names.length;i++){
+                tr
+                    td  #{image_names[i].lagguage_type}
+                    td  #{image_names[i].size}
+                    td  #{image_names[i].cost}
+            - }
+  
+  

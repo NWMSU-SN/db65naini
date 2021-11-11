@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var Costume=require('./models/costume')
+var Costume=require('./models/lagguage')
 
 
 
@@ -28,9 +28,9 @@ async function recreateDB(){
   // Delete everything
   await Costume.deleteMany();
   
- Costume.insertMany( [{costume_type:"ghost", size:'large',
- cost:25.4},{costume_type:"traditional", size:'medium',
- cost:45.4},{costume_type:"western", size:'small',
+ Costume.insertMany( [{lagguage_type:"Travelling", size:'large',
+ cost:25.4},{lagguage_type:"Sports", size:'medium',
+ cost:45.4},{lagguage_type:"Suitcase", size:'small',
  cost:15.4}],function(err,doc) {
   if(err) return console.error(err);
   console.log("First object saved")
@@ -64,7 +64,6 @@ app.use('/luggage', luggageRouter);
 app.use('/addmods', addmodsRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
-app.use('/', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
