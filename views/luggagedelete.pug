@@ -1,0 +1,47 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let id = toShow._id 
+  - let type = toShow.luggage_type 
+  - let cost = toShow.cost 
+  - let size = toShow.size 
+  div(class="card card-body" style="width: 30rem;") 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3 col-sm-6') Luggage ID: 
+      div(class=' mr-3 col-sm-6' id="id" data=id) #{id} 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3 col-sm-6') Luggage Type: 
+      div(class=' mr-3 col-sm-6') #{type} 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3  col-sm-6') Luggage Size  : 
+      div(class=' mr-3 col-sm-6')  #{size} 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3 col-sm-6') Luggage Cost: 
+      div(class=' mr-3 col-sm-6') $#{cost}
+    div(class="d-flex flex-row justify-content-evenly")
+      input(class="btn btn-danger " type="submit" value="Delete" id="delete")      
+      a(href='/luggage' class="btn btn-secondary") Cancel
+  script. 
+    document.getElementById('delete').addEventListener('click', (event) => { 
+
+        var id =document.getElementById('id').getAttribute("data");
+      event.preventDefault(); 
+      alert(id);
+      // TODO do something here to show user that form is being submitted 
+      var x ='/resource/luggages/'+id;
+      alert(x)
+
+      fetch(x, { 
+        method: 'DELETE'
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Deleted succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Deleted failed " + error ) 
+      }); 
+    }); 

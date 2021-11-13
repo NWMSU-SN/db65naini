@@ -13,4 +13,6 @@ router.get('/create', luggage_controlers.luggage_create_Page);
 
 router.get('/update', luggage_controlers.luggage_update_Page); 
 
+router.get('/delete', luggage_controlers.luggage_delete_Page); 
+
 module.exports = router;
