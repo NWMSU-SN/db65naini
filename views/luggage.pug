@@ -6,13 +6,13 @@ block content
     table(class="table table-dark table-striped")
         thead
             tr 
-                th(scope="col") Lagguage Type 
+                th(scope="col") Luggage Type 
                 th(scope="col") Size 
                 th(scope="col") Pirce
         tbody        
             - for(let i=0;i<image_names.length;i++){
                 tr
-                    td  #{image_names[i].lagguage_type}
+                    td  #{image_names[i].luggage_type}
                     td  #{image_names[i].size}
                     td  #{image_names[i].cost}
             - }

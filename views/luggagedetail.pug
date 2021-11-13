@@ -1,0 +1,22 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let id = toShow._id 
+  - let type = toShow.luggage_type 
+  - let cost = toShow.cost 
+  - let size = toShow.size 
+  div(class="card card-body" style="width: 30rem;") 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3 col-sm-6') Luggage ID: 
+      div(class=' mr-3 col-sm-6') #{id} 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3 col-sm-6') Luggage Type: 
+      div(class=' mr-3 col-sm-6') #{type} 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3  col-sm-6') Luggage Size  : 
+      div(class=' mr-3 col-sm-6')  #{size} 
+    div(class="row p-3 mb-2 bg-secondary text-white") 
+      div(class=' mr-3 col-sm-6') Luggage Cost: 
+      div(class=' mr-3 col-sm-6') $#{cost}

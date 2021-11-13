@@ -3,7 +3,7 @@ var router = express.Router();
  
 // Require controller modules. 
 var api_controller = require('../controllers/api'); 
-var lagguage_controller = require('../controllers/lagguageController'); 
+var luggage_controller = require('../controllers/luggage'); 
  
 /// API ROUTE /// 
  
@@ -13,19 +13,19 @@ router.get('/', api_controller.api);
 /// COSTUME ROUTES /// 
  
 // POST request for creating a Costume.  
-router.post('/lagguages', lagguage_controller.lagguage_create_post); 
+router.post('/resource/luggages', luggage_controller.luggage_create_post); 
  
 // DELETE request to delete Costume. 
-router.delete('/lagguages/:id', lagguage_controller.lagguage_delete); 
+router.delete('/resource/luggages/:id', luggage_controller.luggage_delete); 
  
 // PUT request to update Costume. 
-router.put('/lagguages/:id', 
-lagguage_controller.lagguage_update_put); 
+router.put('/resource/luggages/:id', 
+luggage_controller.luggage_update_put); 
  
 // GET request for one Costume. 
-router.get('/lagguages/:id', lagguage_controller.lagguage_detail); 
+router.get('/resource/luggages/:id', luggage_controller.luggage_detail); 
  
 // GET request for list of all Costume items. 
-router.get('/lagguages', lagguage_controller.lagguage_list); 
- 
+router.get('/resource/luggages', luggage_controller.luggage_list); 
+
 module.exports = router; 

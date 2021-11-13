@@ -1,50 +1,59 @@
 var createError = require('http-errors');
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var Costume=require('./models/lagguage')
+var Luggage = require('./models/luggage')
 
 
 
-const connectionString=process.env.MONGO_CON;
+const connectionString = process.env.MONGO_CON;
 mongoose.connect(connectionString,
-  {useNewUrlParser: true,
-  useUnifiedTopology: true});
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
-  var db= mongoose.connection;
+var db = mongoose.connection;
 
 //Bind connection to error event
 db.on('error', console.error.bind(console, `MongoDB connection
 error:`));
-db.once("open", function(){
+db.once("open", function () {
 
 
-console.log("Connection to DB succeeded")});
+  console.log("Connection to DB succeeded")
+});
 
 
-async function recreateDB(){
+async function recreateDB() {
   // Delete everything
-  await Costume.deleteMany();
-  
- Costume.insertMany( [{lagguage_type:"Travelling", size:'large',
- cost:25.4},{lagguage_type:"Sports", size:'medium',
- cost:45.4},{lagguage_type:"Suitcase", size:'small',
- cost:15.4}],function(err,doc) {
-  if(err) return console.error(err);
-  console.log("First object saved")
+  await Luggage.deleteMany();
+
+  Luggage.insertMany([{
+    luggage_type: "Travelling", size: 'large',
+    cost: 25.4
+  }, {
+    luggage_type: "Sports", size: 'medium',
+    cost: 45.4
+  }, {
+    luggage_type: "Suitcase", size: 'small',
+    cost: 15.4
+  }], function (err, doc) {
+    if (err) return console.error(err);
+    console.log("First object saved")
   });
- }
- let reseed = true;
- if (reseed) { recreateDB();}
+}
+let reseed = true;
+if (reseed) { recreateDB(); }
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var luggageRouter = require('./routes/luggage');
 var addmodsRouter = require('./routes/addmods');
 var selectorRouter = require('./routes/selector');
-var resourceRouter =require('./routes/resource')
+var resourceRouter = require('./routes/resource')
 
 var app = express();
 
@@ -63,15 +72,15 @@ app.use('/users', usersRouter);
 app.use('/luggage', luggageRouter);
 app.use('/addmods', addmodsRouter);
 app.use('/selector', selectorRouter);
-app.use('/resource', resourceRouter);
+app.use('/', resourceRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
