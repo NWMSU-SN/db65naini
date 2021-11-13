@@ -1,7 +1,11 @@
 extends layout
 
-block content
+block content  
+  
   h1= title
+  div(class='d-flex justify-content-sm-end')
+   a(class="btn btn-secondary" herf="/luggage/create" ) Create
+
   - let image_names = results
     table(class="table table-dark table-striped")
         thead
@@ -9,12 +13,17 @@ block content
                 th(scope="col") Luggage Type 
                 th(scope="col") Size 
                 th(scope="col") Pirce
+                th(scope="col") Actions
         tbody        
-            - for(let i=0;i<image_names.length;i++){
+             each result in results
                 tr
-                    td  #{image_names[i].luggage_type}
-                    td  #{image_names[i].size}
-                    td  #{image_names[i].cost}
-            - }
+                    td  #{result.luggage_type} 
+                    td  #{result.size}
+                    td  #{result.cost}
+                    td  
+                      a(href='/luggage/delete/?id='+result._id) Delete 
+                      a(href='/luggage/detail/?id='+result._id) View 
+                      a(href='/luggage/update/?id='+result._id) Update 
+            
   
   
