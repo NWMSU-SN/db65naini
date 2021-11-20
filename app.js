@@ -4,7 +4,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var Luggage = require('./models/luggage')
+var Luggage = require('./models/luggage');
+
+var passport = require('passport'); 
+var LocalStrategy = require('passport-local').Strategy; 
 
 
 
@@ -39,7 +42,7 @@ async function recreateDB() {
     cost: 45.4
   }, {
     luggage_type: "Suitcase", size: 'small',
-    cost: 15.4
+    cost: 95.4
   }], function (err, doc) {
     if (err) return console.error(err);
     console.log("First object saved")
@@ -67,6 +70,39 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+passport.use(new LocalStrategy( 
+  function(username, password, done) { 
+    Account.findOne({ username: username }, function (err, user) { 
+      if (err) { return done(err); } 
+      if (!user) { 
+        return done(null, false, { message: 'Incorrect username.' }); 
+      } 
+      if (!user.validPassword(password)) { 
+        return done(null, false, { message: 'Incorrect password.' }); 
+      } 
+      return done(null, user); 
+    }); 
+  } 
+))
+app.use(require('express-session')({ 
+  secret: 'keyboard cat', 
+  resave: false, 
+  saveUninitialized: false 
+})); 
+
+
+// passport config 
+// Use the existing connection 
+// The Account model  
+var Account =require('./models/account'); 
+ 
+passport.use(new LocalStrategy(Account.authenticate())); 
+passport.serializeUser(Account.serializeUser()); 
+passport.deserializeUser(Account.deserializeUser()); 
+
+app.use(passport.initialize()); 
+app.use(passport.session()); 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/luggage', luggageRouter);
@@ -78,6 +114,8 @@ app.use('/', resourceRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+
 
 // error handler
 app.use(function (err, req, res, next) {
